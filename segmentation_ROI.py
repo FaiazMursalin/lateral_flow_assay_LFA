@@ -17,6 +17,11 @@ class DoubleConv(nn.Module):
             nn.ReLU(inplace=True),
         )
 
+        # Initialize weights using He initialization
+        for m in self.conv.children():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+
     def forward(self, x):
         return self.conv(x)
 
